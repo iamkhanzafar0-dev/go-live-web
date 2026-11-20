@@ -6,94 +6,131 @@
   <title>GO LIVE Broadcast Studio • PureSunni Network</title>
   <style>
     :root {
-      --bg: #0b0d12;
-      --panel: #151923;
-      --panel-top: #1f2533;
-      --border: #2a3142;
+      --bg: #080a0f;
+      --panel: #131722;
+      --panel-top: #1c2230;
+      --border: #283042;
       --red: #ff3b30;
       --red-dark: #9e1510;
-      --amber: #ffbe0b;
+      --amber: #ff9f0a;
+      --gold: #ffd54f;
       --green: #10b981;
       --text: #f3f4f6;
-      --muted: #9ca3af;
+      --muted: #8e96a8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background: radial-gradient(circle at top, #151a26, var(--bg)); color: var(--text); min-height: 100vh; padding: 14px; }
-    .container { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+    body { background: radial-gradient(circle at top, #141926, var(--bg)); color: var(--text); min-height: 100vh; }
+
+    /* Top Welcome Banner (Matching Android App) */
+    .welcome-banner {
+      background: linear-gradient(90deg, #d97706, #f59e0b);
+      color: #111827; font-size: 12px; font-weight: 800;
+      padding: 8px 14px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .welcome-banner button {
+      background: rgba(0,0,0,0.15); border: none; color: #111;
+      padding: 2px 8px; border-radius: 6px; font-weight: 900; cursor: pointer;
+    }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; }
 
     /* Animated Header */
     header {
       display: flex; justify-content: space-between; align-items: center;
       background: linear-gradient(180deg, var(--panel-top), var(--panel));
       border: 1px solid var(--border); border-radius: 16px; padding: 12px 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
-    .brand { display: flex; align-items: center; gap: 12px; }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .menu-btn {
+      background: #1d2332; border: 1px solid var(--border); color: var(--text);
+      width: 38px; height: 38px; border-radius: 10px; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
     .live-dot {
-      width: 12px; height: 12px; border-radius: 50%; background: var(--red);
+      width: 11px; height: 11px; border-radius: 50%; background: var(--red);
       box-shadow: 0 0 12px var(--red); animation: pulse 1.2s infinite alternate;
     }
-    @keyframes pulse { from { transform: scale(0.9); opacity: 0.7; } to { transform: scale(1.3); opacity: 1; } }
+    @keyframes pulse { from { transform: scale(0.85); opacity: 0.65; } to { transform: scale(1.3); opacity: 1; } }
     .title {
-      font-size: 20px; font-weight: 900; letter-spacing: 1.5px;
-      background: linear-gradient(90deg, #fff, #ffd54f, #ff5252, #fff);
+      font-size: 21px; font-weight: 900; letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #ffffff, #ffd54f, #ff5252, #ffffff);
       background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: shine 2.5s linear infinite;
     }
     @keyframes shine { to { background-position: 200% center; } }
-    .subtitle { font-size: 11px; color: var(--amber); font-weight: 700; letter-spacing: 1px; }
+    .subtitle { font-size: 11px; color: #d97706; font-weight: 800; letter-spacing: 0.6px; }
     .badge {
-      padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 800;
-      background: #1f2430; border: 1px solid var(--border); color: var(--muted);
+      padding: 6px 13px; border-radius: 999px; font-size: 11px; font-weight: 800;
+      background: #1a202c; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.6px;
     }
     .badge.live { background: rgba(255,59,48,0.18); border-color: var(--red); color: var(--red); }
+    .badge.reconnecting { background: rgba(255,159,10,0.18); border-color: var(--amber); color: var(--amber); }
 
-    /* Preview Canvas */
+    /* Cards */
     .studio-card {
       background: linear-gradient(180deg, var(--panel-top), var(--panel));
-      border: 1px solid var(--border); border-radius: 18px; padding: 12px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      border: 1px solid var(--border); border-radius: 18px; padding: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
     }
+    .card-label { font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px; display: block; }
+
+    /* Preview Canvas + Android-style Placeholder */
     .canvas-wrap {
-      position: relative; width: 100%; aspect-ratio: 16/9; background: #000;
-      border-radius: 12px; overflow: hidden; border: 1.5px solid #2c3345;
+      position: relative; width: 100%; aspect-ratio: 16/9; background: #05070a;
+      border-radius: 12px; overflow: hidden; border: 1.5px solid #2b3346;
     }
     canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .cam-placeholder {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+      background: radial-gradient(circle, #121722, #07090e); text-align: center; padding: 16px;
+    }
+    .cam-placeholder.hidden { display: none; }
+    .cam-icon { font-size: 34px; opacity: 0.7; }
+    .cam-placeholder p { font-size: 12px; color: var(--muted); }
+    .enable-cam-btn {
+      background: #232a3b; border: 1px solid #3b465e; color: #fff;
+      padding: 9px 18px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer;
+    }
     .source-pill {
-      position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.75);
-      border: 1px solid rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 6px;
-      font-size: 11px; font-weight: 700; color: var(--amber);
+      position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.78);
+      border: 1px solid rgba(255,255,255,0.16); padding: 4px 10px; border-radius: 6px;
+      font-size: 10px; font-weight: 800; color: var(--gold); z-index: 2;
     }
 
     /* Controls Grid */
     .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
-    button, .file-btn {
-      background: linear-gradient(180deg, #282f3e, #161a23); color: var(--text);
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+    button.ctrl, .file-btn {
+      background: linear-gradient(180deg, #262d3d, #151923); color: var(--text);
       border: 1px solid var(--border); border-radius: 11px; padding: 11px 10px;
       font-size: 12px; font-weight: 700; cursor: pointer; text-align: center;
       transition: 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     }
-    button:hover, .file-btn:hover { border-color: #4b5563; }
-    button.active {
+    button.ctrl:hover, .file-btn:hover { border-color: #4b5563; }
+    button.ctrl.active {
       background: linear-gradient(180deg, #e53935, #8e1414);
       border-color: var(--red); color: #fff; box-shadow: 0 4px 14px rgba(255,59,48,0.35);
     }
-    button.amber-active {
-      background: rgba(255,190,11,0.2); border-color: var(--amber); color: var(--amber);
+    button.ctrl.amber-active {
+      background: rgba(255,159,10,0.18); border-color: var(--amber); color: var(--gold);
+    }
+    button.ctrl.green-active {
+      background: rgba(16,185,129,0.18); border-color: var(--green); color: #34d399;
     }
     input[type="file"] { display: none; }
 
     /* Telemetry + Audio Meter */
     .telemetry {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;
-      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+      padding-bottom: 12px; border-bottom: 1px solid var(--border);
     }
-    .t-label { font-size: 10px; color: var(--muted); letter-spacing: 0.8px; }
-    .t-val { font-size: 14px; font-weight: 800; font-family: monospace; margin-top: 2px; }
+    .t-label { font-size: 10px; color: var(--muted); letter-spacing: 0.8px; font-weight: 700; }
+    .t-val { font-size: 14px; font-weight: 800; font-family: monospace; margin-top: 3px; }
     .meter-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
     .meter-bar-bg {
-      flex: 1; height: 10px; background: #090b10; border-radius: 6px;
+      flex: 1; height: 10px; background: #080a0f; border-radius: 6px;
       border: 1px solid var(--border); overflow: hidden;
     }
     .meter-bar-fill {
@@ -102,102 +139,186 @@
       transition: width 0.08s linear;
     }
 
-    /* RTMP & Overlay Inputs */
+    /* RTMP & Inputs */
     .row-input { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
     input[type="text"], select {
-      flex: 1; min-width: 180px; background: #0d1017; border: 1px solid var(--border);
+      flex: 1; min-width: 180px; background: #0b0e15; border: 1px solid var(--border);
       color: var(--text); padding: 10px 12px; border-radius: 10px; font-size: 13px;
     }
+    .rtmp-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+    .rtmp-item {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      background: #0c0f17; border: 1px solid var(--border); padding: 8px 12px; border-radius: 10px; font-size: 12px;
+    }
+    .rtmp-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; color: #d1d5db; }
+    .del-btn { background: #3b1013; border: 1px solid var(--red-dark); color: var(--red); padding: 4px 9px; border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: 800; }
 
     /* Go Live Action Bar */
     .action-bar { display: flex; gap: 10px; }
     .go-live-btn {
-      flex: 1; padding: 15px; font-size: 15px; font-weight: 900; letter-spacing: 1px;
-      background: linear-gradient(180deg, #ff453a, #b71c1c); border-color: #ff6b6b;
-      box-shadow: 0 8px 22px rgba(255,59,48,0.4);
+      flex: 1; padding: 15px; font-size: 15px; font-weight: 900; letter-spacing: 1px; color: #fff;
+      background: linear-gradient(180deg, #ff453a, #b71c1c); border: 1px solid #ff6b6b; border-radius: 14px;
+      box-shadow: 0 8px 22px rgba(255,59,48,0.4); cursor: pointer;
     }
     .go-live-btn.streaming { background: linear-gradient(180deg, #2b313e, #161920); border-color: var(--red); }
-    .kill-btn { width: 56px; background: #3b1013; border-color: var(--red-dark); color: var(--red); font-size: 18px; }
+    .kill-btn {
+      width: 56px; background: #261215; border: 1px solid var(--red-dark); border-radius: 14px;
+      color: var(--red); font-size: 18px; cursor: pointer;
+    }
 
-    footer { text-align: center; font-size: 12px; color: var(--muted); padding: 8px 0 18px; }
-    footer a { color: var(--red); font-weight: 700; text-decoration: underline; }
-    @media (max-width: 600px) { .grid-4, .telemetry { grid-template-columns: repeat(2, 1fr); } }
+    /* Slide-out Drawer (Matching Android Side Menu) */
+    .drawer-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 40; display: none;
+    }
+    .drawer-backdrop.open { display: block; }
+    .drawer {
+      position: fixed; top: 0; left: -310px; width: 290px; height: 100%;
+      background: #10141e; border-right: 1px solid var(--border); z-index: 50;
+      padding: 18px; transition: left 0.25s ease; display: flex; flex-direction: column; gap: 14px;
+    }
+    .drawer.open { left: 0; }
+    .drawer-box {
+      background: #171c29; border: 1px solid var(--border); border-radius: 14px; padding: 14px;
+    }
+    .drawer-box h4 { font-size: 13px; color: #fff; margin-bottom: 6px; }
+    .drawer-box p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    footer { text-align: center; font-size: 12px; color: var(--muted); padding: 8px 0 20px; }
+    footer a { color: var(--red); font-weight: 800; text-decoration: none; }
+    @media (max-width: 600px) { .grid-4, .telemetry { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
+
+  <!-- Top Welcome Banner -->
+  <div id="welcomeBanner" class="welcome-banner">
+    <span>📢 Welcome to GO LIVE Studio • PureSunni Network</span>
+    <button onclick="document.getElementById('welcomeBanner').style.display='none'">✕</button>
+  </div>
+
+  <!-- Side Drawer Menu (About GO LIVE & Broadcaster Profile) -->
+  <div id="drawerBackdrop" class="drawer-backdrop" onclick="toggleDrawer(false)"></div>
+  <aside id="sideDrawer" class="drawer">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div class="title" style="font-size:18px;">GO LIVE</div>
+        <div class="subtitle">PureSunni Network</div>
+      </div>
+      <button class="menu-btn" onclick="toggleDrawer(false)">✕</button>
+    </div>
+
+    <div class="drawer-box">
+      <h4>Channel & Broadcaster Profile</h4>
+      <p><strong style="color:#fff;">Broadcaster:</strong> Zafar Khan</p>
+      <p><strong style="color:#ff5252;">YouTube Channel:</strong> Pure Sunni Network</p>
+      <p style="margin-top:4px;font-size:11px;">Powered by Pure Sunni Network • Zafar Khan</p>
+    </div>
+
+    <div class="drawer-box">
+      <h4>GO LIVE Broadcast Studio v1.0.32</h4>
+      <p>Web & Mobile Broadcast Studio with 24/7 loop playback, multi-RTMP ingest publishing, live audio dB meter, auto-reconnect failover, and local backup recording.</p>
+    </div>
+
+    <div class="drawer-box">
+      <h4>Auto-Reconnect Failover</h4>
+      <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-top:6px;cursor:pointer;">
+        <input type="checkbox" id="autoReconnectChk" checked /> Enable Exponential Auto-Reconnect
+      </label>
+    </div>
+  </aside>
+
   <div class="container">
+    <!-- Header -->
     <header>
-      <div class="brand">
+      <div class="header-left">
+        <button class="menu-btn" onclick="toggleDrawer(true)" title="Menu & About">☰</button>
         <div class="live-dot"></div>
         <div>
           <div class="title">GO LIVE</div>
-          <div class="subtitle">PureSunni Network • Web Broadcast Studio</div>
+          <div class="subtitle">PureSunni Network</div>
         </div>
       </div>
       <div id="statusBadge" class="badge">OFFLINE</div>
     </header>
 
+    <!-- Camera / Studio Preview -->
     <div class="studio-card">
+      <span class="card-label">CAMERA & STUDIO PREVIEW</span>
       <div class="canvas-wrap">
         <canvas id="studioCanvas" width="1280" height="720"></canvas>
-        <div id="sourcePill" class="source-pill">CAMERA / READY</div>
+        <div id="sourcePill" class="source-pill">STANDBY • READY</div>
+        <div id="camPlaceholder" class="cam-placeholder">
+          <div class="cam-icon">📹</div>
+          <p>Camera preview requires permission or select Local Video / Screen</p>
+          <button class="enable-cam-btn" onclick="startCamera()">Enable Camera</button>
+        </div>
       </div>
 
       <div class="grid-4">
-        <button id="btnCam" class="active" onclick="startCamera()">Camera</button>
-        <button id="btnScreen" onclick="startScreenShare()">Screen / Tab</button>
+        <button id="btnCam" class="ctrl" onclick="startCamera()">📷 Camera</button>
+        <button id="btnScreen" class="ctrl" onclick="startScreenShare()">🖥️ Screen / Tab</button>
         <label class="file-btn">
-          Local Video / Loop
-          <input type="file" id="videoInput" accept="video/*" multiple onchange="loadLocalVideos(event)" />
+          🔁 24/7 Local Video
+          <input type="file" id="videoInput" accept="video/*" onchange="loadLocalVideos(event)" />
         </label>
         <label class="file-btn">
-          Poster / Overlay
+          🖼️ Poster / Logo
           <input type="file" id="posterInput" accept="image/*" onchange="loadPosterImage(event)" />
         </label>
       </div>
 
-      <div class="grid-2">
-        <button id="btnAudioOnly" onclick="toggleAudioOnly()">Audio Only + Poster: OFF</button>
-        <button id="btnMic" class="amber-active" onclick="toggleMic()">Mic Audio: ON</button>
+      <div class="grid-3">
+        <button id="btnAudioOnly" class="ctrl" onclick="toggleAudioOnly()">Audio Only + Poster: OFF</button>
+        <button id="btnMic" class="ctrl amber-active" onclick="toggleMic()">Mic Audio: ON</button>
+        <button id="btnLocalRec" class="ctrl" onclick="toggleLocalRecord()">⏺ Local Backup: OFF</button>
       </div>
 
       <div class="row-input">
-        <input type="text" id="tickerInput" placeholder="Live Scrolling Ticker Text (e.g. PureSunni Network Live)" oninput="updateTicker()" />
+        <input type="text" id="tickerInput" placeholder="Live Scrolling Ticker (e.g. PureSunni Network Live Mehfil)" oninput="updateTicker()" />
         <select id="resSelect" onchange="updateResolution()">
-          <option value="1280x720">720p HD (30 fps)</option>
-          <option value="1920x1080">1080p Full HD (30 fps)</option>
-          <option value="854x480">480p Data Saver (30 fps)</option>
+          <option value="1280x720">720p HD • 30 fps (3000k)</option>
+          <option value="1920x1080">1080p Full HD • 30 fps (4500k)</option>
+          <option value="854x480">480p Data Saver • 30 fps (1200k)</option>
         </select>
       </div>
     </div>
 
+    <!-- Stream Health & Telemetry -->
     <div class="studio-card">
       <div class="telemetry">
         <div><div class="t-label">DURATION</div><div id="tDuration" class="t-val">00:00:00</div></div>
-        <div><div class="t-label">TARGET BITRATE</div><div id="tBitrate" class="t-val">2500k</div></div>
-        <div><div class="t-label">HEALTH</div><div id="tHealth" class="t-val" style="color:var(--green)">HEALTHY</div></div>
-        <div><div class="t-label">NETWORK</div><div id="tNet" class="t-val" style="color:var(--green)">ONLINE</div></div>
+        <div><div class="t-label">BITRATE</div><div id="tBitrate" class="t-val">3000k</div></div>
+        <div><div class="t-label">OUTPUT</div><div id="tOutput" class="t-val">720p 30fps</div></div>
+        <div><div class="t-label">NETWORK / HEALTH</div><div id="tNet" class="t-val" style="color:var(--green)">ONLINE • 100%</div></div>
       </div>
       <div class="meter-row">
         <span style="font-size:11px;font-weight:800;color:var(--muted)">AUDIO</span>
         <div class="meter-bar-bg"><div id="audioBar" class="meter-bar-fill"></div></div>
-        <span id="audioDbText" style="font-size:11px;font-family:monospace;font-weight:800;color:var(--green)">-60dB • SILENT</span>
+        <span id="audioDbText" style="font-size:11px;font-family:monospace;font-weight:800;color:var(--muted)">-60dB • SILENT</span>
       </div>
     </div>
 
+    <!-- Multi-RTMP / RTMPS Destinations -->
     <div class="studio-card">
-      <div class="t-label" style="margin-bottom:6px">RTMP STREAM DESTINATIONS (YOUTUBE / FACEBOOK / CUSTOM)</div>
+      <span class="card-label">SIMULTANEOUS RTMP / RTMPS DESTINATIONS (YOUTUBE / FACEBOOK)</span>
       <div class="row-input">
-        <input type="text" id="rtmpUrl" placeholder="rtmp://a.rtmp.youtube.com/live2/YOUR_STREAM_KEY" />
-        <input type="text" id="relayUrl" value="ws://localhost:8080" placeholder="WebSocket Relay URL (wss://your-relay.onrender.com)" />
+        <input type="text" id="rtmpInput" placeholder="rtmp://a.rtmp.youtube.com/live2/YOUR_STREAM_KEY" />
+        <button class="ctrl amber-active" style="flex:0 0 auto;padding:10px 16px;" onclick="addRtmpDestination()">+ Add Stream Key</button>
+      </div>
+      <div id="rtmpList" class="rtmp-list"></div>
+
+      <div class="row-input" style="margin-top:10px;">
+        <input type="text" id="relayUrl" value="ws://localhost:8080" placeholder="WebSocket RTMP Relay URL (wss://your-relay.onrender.com)" />
       </div>
     </div>
 
+    <!-- Action Bar -->
     <div class="action-bar">
-      <button id="btnGoLive" class="go-live-btn" onclick="toggleStream()">START LIVE STREAM</button>
+      <button id="btnGoLive" class="go-live-btn" onclick="toggleStream()">▶ START LIVE STREAM</button>
       <button class="kill-btn" title="Emergency Stop" onclick="emergencyStop()">⏻</button>
     </div>
 
+    <!-- Footer (Matching Android App) -->
     <footer>
       Creator by Zafar Khan • <a href="https://www.youtube.com/@PureSunniNetwork" target="_blank">Pure Sunni Network</a>
     </footer>
@@ -217,13 +338,56 @@
     let tickerText = "";
     let tickerX = canvas.width;
     let isLive = false;
+    let manualStop = false;
+    let reconnectAttempts = 0;
+    let currentBitrate = 3000000;
+
     let mediaRecorder = null;
+    let localRecorder = null;
+    let localChunks = [];
     let ws = null;
     let timerInterval = null;
     let secondsElapsed = 0;
 
-    // Audio Context for Live dB Meter + Mixer
     let audioCtx, analyser, micSource, destNode;
+
+    // Saved RTMP Destinations
+    let rtmpTargets = JSON.parse(localStorage.getItem('golive_rtmp_targets') || '[]');
+    renderRtmpList();
+
+    function toggleDrawer(open) {
+      document.getElementById('sideDrawer').classList.toggle('open', open);
+      document.getElementById('drawerBackdrop').classList.toggle('open', open);
+    }
+
+    function addRtmpDestination() {
+      const val = document.getElementById('rtmpInput').value.trim();
+      if (!val) return;
+      rtmpTargets.push(val);
+      localStorage.setItem('golive_rtmp_targets', JSON.stringify(rtmpTargets));
+      document.getElementById('rtmpInput').value = '';
+      renderRtmpList();
+    }
+
+    function removeRtmpDestination(idx) {
+      rtmpTargets.splice(idx, 1);
+      localStorage.setItem('golive_rtmp_targets', JSON.stringify(rtmpTargets));
+      renderRtmpList();
+    }
+
+    function renderRtmpList() {
+      const list = document.getElementById('rtmpList');
+      if (rtmpTargets.length === 0) {
+        list.innerHTML = `<div style="font-size:11px;color:var(--muted);padding:4px 2px;">No saved stream keys yet. Add one above or paste directly before going live.</div>`;
+        return;
+      }
+      list.innerHTML = rtmpTargets.map((url, i) => `
+        <div class="rtmp-item">
+          <span>#${i + 1} • ${url}</span>
+          <button class="del-btn" onclick="removeRtmpDestination(${i})">Remove</button>
+        </div>
+      `).join('');
+    }
 
     async function initAudio(stream) {
       if (!audioCtx) {
@@ -274,7 +438,8 @@
         activeStream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 }, audio: true });
         hiddenVideo.srcObject = activeStream;
         await hiddenVideo.play();
-        document.getElementById('sourcePill').textContent = "CAMERA • LIVE INPUT";
+        document.getElementById('camPlaceholder').classList.add('hidden');
+        document.getElementById('sourcePill').textContent = "CAMERA • LIVE";
         setActiveBtn('btnCam');
         await initAudio(activeStream);
       } catch (e) {
@@ -288,6 +453,7 @@
         activeStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
         hiddenVideo.srcObject = activeStream;
         await hiddenVideo.play();
+        document.getElementById('camPlaceholder').classList.add('hidden');
         document.getElementById('sourcePill').textContent = "SCREEN / TAB CAPTURE";
         setActiveBtn('btnScreen');
         await initAudio(activeStream);
@@ -302,6 +468,7 @@
       hiddenVideo.src = URL.createObjectURL(file);
       hiddenVideo.muted = false;
       hiddenVideo.play();
+      document.getElementById('camPlaceholder').classList.add('hidden');
       document.getElementById('sourcePill').textContent = "24/7 LOOP • " + file.name;
       setActiveBtn('');
     }
@@ -310,7 +477,10 @@
       const file = e.target.files[0];
       if (!file) return;
       const img = new Image();
-      img.onload = () => { posterImg = img; };
+      img.onload = () => {
+        posterImg = img;
+        document.getElementById('camPlaceholder').classList.add('hidden');
+      };
       img.src = URL.createObjectURL(file);
     }
 
@@ -329,6 +499,32 @@
       btn.classList.toggle('amber-active', micEnabled);
     }
 
+    // Local Backup Recording (Saves .webm directly to device)
+    function toggleLocalRecord() {
+      const btn = document.getElementById('btnLocalRec');
+      if (localRecorder && localRecorder.state === 'recording') {
+        localRecorder.stop();
+        btn.textContent = "⏺ Local Backup: OFF";
+        btn.classList.remove('green-active');
+        return;
+      }
+      const stream = canvas.captureStream(30);
+      if (destNode) destNode.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+      localChunks = [];
+      localRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp8,opus' });
+      localRecorder.ondataavailable = e => { if (e.data.size > 0) localChunks.push(e.data); };
+      localRecorder.onstop = () => {
+        const blob = new Blob(localChunks, { type: 'video/webm' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `PureSunni_Live_${Date.now()}.webm`;
+        a.click();
+      };
+      localRecorder.start(1000);
+      btn.textContent = "⏺ Recording Backup...";
+      btn.classList.add('green-active');
+    }
+
     function updateTicker() {
       tickerText = document.getElementById('tickerInput').value.trim();
       tickerX = canvas.width;
@@ -337,7 +533,9 @@
     function updateResolution() {
       const [w, h] = document.getElementById('resSelect').value.split('x').map(Number);
       canvas.width = w; canvas.height = h;
-      document.getElementById('tBitrate').textContent = w === 1920 ? '4500k' : w === 1280 ? '2500k' : '1000k';
+      currentBitrate = w === 1920 ? 4500000 : w === 1280 ? 3000000 : 1200000;
+      document.getElementById('tBitrate').textContent = (currentBitrate / 1000) + 'k';
+      document.getElementById('tOutput').textContent = `${h}p 30fps`;
     }
 
     function setActiveBtn(id) {
@@ -347,7 +545,7 @@
 
     // 30 FPS Compositor Render Loop
     function renderLoop() {
-      ctx.fillStyle = '#07090d';
+      ctx.fillStyle = '#05070a';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (!audioOnlyMode && hiddenVideo.readyState >= 2) {
@@ -357,8 +555,7 @@
         if (audioOnlyMode) {
           ctx.drawImage(posterImg, 0, 0, canvas.width, canvas.height);
         } else {
-          // Corner Logo Overlay
-          const w = canvas.width * 0.16;
+          const w = canvas.width * 0.15;
           const h = (posterImg.height / posterImg.width) * w;
           ctx.drawImage(posterImg, canvas.width - w - 24, 24, w, h);
         }
@@ -377,49 +574,89 @@
     renderLoop();
 
     function toggleStream() {
-      if (isLive) { stopStream(); return; }
-      const rtmp = document.getElementById('rtmpUrl').value.trim();
-      const relay = document.getElementById('relayUrl').value.trim();
-      if (!rtmp) { alert("Please enter your YouTube/Facebook RTMP URL + Stream Key"); return; }
+      if (isLive) { manualStop = true; stopStream(); return; }
+      const inputVal = document.getElementById('rtmpInput').value.trim();
+      const targets = [...rtmpTargets];
+      if (inputVal && !targets.includes(inputVal)) targets.push(inputVal);
 
+      if (targets.length === 0) {
+        alert("Please enter or add at least one YouTube / Facebook RTMP URL + Stream Key");
+        return;
+      }
+      manualStop = false;
+      reconnectAttempts = 0;
+      connectRelay(targets);
+    }
+
+    function connectRelay(targets) {
+      const relay = document.getElementById('relayUrl').value.trim();
+      const query = targets.map(t => `rtmp=${encodeURIComponent(t)}`).join('&');
       try {
-        ws = new WebSocket(`${relay}?rtmp=${encodeURIComponent(rtmp)}`);
+        ws = new WebSocket(`${relay}?${query}`);
         ws.onopen = () => {
+          reconnectAttempts = 0;
           const canvasStream = canvas.captureStream(30);
           if (destNode) destNode.stream.getAudioTracks().forEach(t => canvasStream.addTrack(t));
-          mediaRecorder = new MediaRecorder(canvasStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2500000 });
-          mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0 && ws.readyState === 1) ws.send(e.data); };
+          mediaRecorder = new MediaRecorder(canvasStream, {
+            mimeType: 'video/webm;codecs=vp8,opus',
+            videoBitsPerSecond: currentBitrate
+          });
+          mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0 && ws && ws.readyState === 1) ws.send(e.data);
+          };
           mediaRecorder.start(250);
-          setLiveUI(true);
+          setLiveUI(true, false);
         };
-        ws.onerror = () => alert("Relay server connect nahi hua. Pehle free Render/Node relay deploy karein.");
-        ws.onclose = () => { if (isLive) stopStream(); };
+        ws.onclose = () => {
+          if (!manualStop && document.getElementById('autoReconnectChk').checked && reconnectAttempts < 5) {
+            reconnectAttempts++;
+            const delay = Math.min(15000, 1000 * Math.pow(2, reconnectAttempts - 1));
+            setLiveUI(false, true, reconnectAttempts);
+            setTimeout(() => { if (!manualStop) connectRelay(targets); }, delay);
+          } else {
+            stopStream();
+          }
+        };
+        ws.onerror = () => {
+          if (reconnectAttempts === 0) {
+            alert("Relay server connect nahi hua. Pehle apna WebSocket-to-FFmpeg RTMP relay server start/deploy karein.");
+          }
+        };
       } catch (err) { alert(err.message); }
     }
 
     function stopStream() {
       if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-      if (ws) ws.close();
-      setLiveUI(false);
+      if (ws) { ws.onclose = null; ws.close(); }
+      setLiveUI(false, false);
     }
 
     function emergencyStop() {
+      manualStop = true;
       stopStream();
+      if (localRecorder && localRecorder.state === 'recording') toggleLocalRecord();
       if (activeStream) activeStream.getTracks().forEach(t => t.stop());
       hiddenVideo.pause();
+      document.getElementById('camPlaceholder').classList.remove('hidden');
     }
 
-    function setLiveUI(live) {
+    function setLiveUI(live, reconnecting, attempt = 0) {
       isLive = live;
       const badge = document.getElementById('statusBadge');
       const btn = document.getElementById('btnGoLive');
+      badge.classList.remove('live', 'reconnecting');
+
+      if (reconnecting) {
+        badge.textContent = `RECONNECTING (${attempt})...`;
+        badge.classList.add('reconnecting');
+        return;
+      }
       badge.textContent = live ? '● LIVE' : 'OFFLINE';
-      badge.classList.toggle('live', live);
-      btn.textContent = live ? 'STOP LIVE STREAM' : 'START LIVE STREAM';
+      if (live) badge.classList.add('live');
+      btn.textContent = live ? '■ STOP LIVE STREAM' : '▶ START LIVE STREAM';
       btn.classList.toggle('streaming', live);
 
-      clearInterval(timerInterval);
-      if (live) {
+      if (live && !timerInterval) {
         secondsElapsed = 0;
         timerInterval = setInterval(() => {
           secondsElapsed++;
@@ -428,11 +665,20 @@
           const s = String(secondsElapsed % 60).padStart(2, '0');
           document.getElementById('tDuration').textContent = `${h}:${m}:${s}`;
         }, 1000);
+      } else if (!live && !reconnecting) {
+        clearInterval(timerInterval);
+        timerInterval = null;
       }
     }
 
-    window.addEventListener('online', () => { document.getElementById('tNet').textContent = 'ONLINE'; });
-    window.addEventListener('offline', () => { document.getElementById('tNet').textContent = 'OFFLINE'; });
+    window.addEventListener('online', () => {
+      const el = document.getElementById('tNet');
+      el.textContent = 'ONLINE • 100%'; el.style.color = 'var(--green)';
+    });
+    window.addEventListener('offline', () => {
+      const el = document.getElementById('tNet');
+      el.textContent = 'OFFLINE • 0%'; el.style.color = 'var(--red)';
+    });
   </script>
 </body>
 </html>
