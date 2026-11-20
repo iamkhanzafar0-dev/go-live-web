@@ -21,7 +21,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
     body { background: radial-gradient(circle at top, #141926, var(--bg)); color: var(--text); min-height: 100vh; }
 
-    /* Top Welcome Banner (Matching Android App) */
     .welcome-banner {
       background: linear-gradient(90deg, #d97706, #f59e0b);
       color: #111827; font-size: 12px; font-weight: 800;
@@ -34,7 +33,7 @@
 
     .container { max-width: 960px; margin: 0 auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; }
 
-    /* Animated Header */
+    /* Header */
     header {
       display: flex; justify-content: space-between; align-items: center;
       background: linear-gradient(180deg, var(--panel-top), var(--panel));
@@ -65,7 +64,7 @@
       background: #1a202c; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.6px;
     }
     .badge.live { background: rgba(255,59,48,0.18); border-color: var(--red); color: var(--red); }
-    .badge.reconnecting { background: rgba(255,159,10,0.18); border-color: var(--amber); color: var(--amber); }
+    .badge.cloud { background: rgba(16,185,129,0.18); border-color: var(--green); color: #34d399; }
 
     /* Cards */
     .studio-card {
@@ -73,38 +72,31 @@
       border: 1px solid var(--border); border-radius: 18px; padding: 14px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.45);
     }
-    .card-label { font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px; display: block; }
-
-    /* Preview Canvas + Android-style Placeholder */
-    .canvas-wrap {
-      position: relative; width: 100%; aspect-ratio: 16/9; background: #05070a;
-      border-radius: 12px; overflow: hidden; border: 1.5px solid #2b3346;
+    .featured-card {
+      border: 1.5px solid #d97706;
+      background: linear-gradient(180deg, #232838, #141824);
+      box-shadow: 0 12px 32px rgba(217, 119, 6, 0.16);
     }
-    canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
-    .cam-placeholder {
-      position: absolute; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 10px;
-      background: radial-gradient(circle, #121722, #07090e); text-align: center; padding: 16px;
+    .card-header-row {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px; flex-wrap: wrap;
     }
-    .cam-placeholder.hidden { display: none; }
-    .cam-icon { font-size: 34px; opacity: 0.7; }
-    .cam-placeholder p { font-size: 12px; color: var(--muted); }
-    .enable-cam-btn {
-      background: #232a3b; border: 1px solid #3b465e; color: #fff;
-      padding: 9px 18px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer;
-    }
-    .source-pill {
-      position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.78);
-      border: 1px solid rgba(255,255,255,0.16); padding: 4px 10px; border-radius: 6px;
-      font-size: 10px; font-weight: 800; color: var(--gold); z-index: 2;
+    .card-label { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 0.9px; }
+    .pill-247 {
+      background: rgba(16,185,129,0.16); border: 1px solid var(--green); color: #34d399;
+      font-size: 10px; font-weight: 800; padding: 3px 9px; border-radius: 999px;
     }
 
-    /* Controls Grid */
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+    /* Inputs & Buttons */
+    .row-input { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    input[type="text"], select {
+      flex: 1; min-width: 180px; background: #0a0d14; border: 1px solid var(--border);
+      color: var(--text); padding: 11px 12px; border-radius: 10px; font-size: 13px;
+    }
+    input[type="text"]:focus { outline: none; border-color: var(--amber); }
+
     button.ctrl, .file-btn {
       background: linear-gradient(180deg, #262d3d, #151923); color: var(--text);
-      border: 1px solid var(--border); border-radius: 11px; padding: 11px 10px;
+      border: 1px solid var(--border); border-radius: 11px; padding: 11px 12px;
       font-size: 12px; font-weight: 700; cursor: pointer; text-align: center;
       transition: 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     }
@@ -117,34 +109,29 @@
       background: rgba(255,159,10,0.18); border-color: var(--amber); color: var(--gold);
     }
     button.ctrl.green-active {
-      background: rgba(16,185,129,0.18); border-color: var(--green); color: #34d399;
+      background: rgba(16,185,129,0.2); border-color: var(--green); color: #34d399;
     }
     input[type="file"] { display: none; }
 
-    /* Telemetry + Audio Meter */
-    .telemetry {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;
-      padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    /* Cloud 24/7 Action Buttons */
+    .cloud-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .btn-cloud-start {
+      flex: 2; min-width: 210px; padding: 13px 16px; font-size: 13px; font-weight: 900; letter-spacing: 0.6px;
+      background: linear-gradient(180deg, #10b981, #047857); border: 1px solid #34d399;
+      color: #fff; border-radius: 12px; cursor: pointer; box-shadow: 0 6px 18px rgba(16,185,129,0.3);
     }
-    .t-label { font-size: 10px; color: var(--muted); letter-spacing: 0.8px; font-weight: 700; }
-    .t-val { font-size: 14px; font-weight: 800; font-family: monospace; margin-top: 3px; }
-    .meter-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-    .meter-bar-bg {
-      flex: 1; height: 10px; background: #080a0f; border-radius: 6px;
-      border: 1px solid var(--border); overflow: hidden;
+    .btn-cloud-stop {
+      flex: 1; min-width: 150px; padding: 13px 14px; font-size: 12px; font-weight: 900;
+      background: #351216; border: 1px solid var(--red); color: #ff6b6b;
+      border-radius: 12px; cursor: pointer;
     }
-    .meter-bar-fill {
-      height: 100%; width: 0%;
-      background: linear-gradient(90deg, var(--green), var(--amber), var(--red));
-      transition: width 0.08s linear;
+    .cloud-status-box {
+      margin-top: 10px; background: #0a0d14; border: 1px dashed #2e384d;
+      border-radius: 10px; padding: 9px 12px; font-size: 12px; color: #cbd5e1;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
     }
 
-    /* RTMP & Inputs */
-    .row-input { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-    input[type="text"], select {
-      flex: 1; min-width: 180px; background: #0b0e15; border: 1px solid var(--border);
-      color: var(--text); padding: 10px 12px; border-radius: 10px; font-size: 13px;
-    }
+    /* RTMP List */
     .rtmp-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
     .rtmp-item {
       display: flex; justify-content: space-between; align-items: center; gap: 8px;
@@ -153,23 +140,54 @@
     .rtmp-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; color: #d1d5db; }
     .del-btn { background: #3b1013; border: 1px solid var(--red-dark); color: var(--red); padding: 4px 9px; border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: 800; }
 
-    /* Go Live Action Bar */
+    /* Preview Canvas */
+    .canvas-wrap {
+      position: relative; width: 100%; aspect-ratio: 16/9; background: #05070a;
+      border-radius: 12px; overflow: hidden; border: 1.5px solid #2b3346;
+    }
+    canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .cam-placeholder {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+      background: radial-gradient(circle, #121722, #07090e); text-align: center; padding: 16px;
+    }
+    .cam-placeholder.hidden { display: none; }
+    .enable-cam-btn {
+      background: #232a3b; border: 1px solid #3b465e; color: #fff;
+      padding: 9px 18px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer;
+    }
+    .source-pill {
+      position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.78);
+      border: 1px solid rgba(255,255,255,0.16); padding: 4px 10px; border-radius: 6px;
+      font-size: 10px; font-weight: 800; color: var(--gold); z-index: 2;
+    }
+
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+
+    /* Telemetry */
+    .telemetry {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;
+      padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+    .t-label { font-size: 10px; color: var(--muted); letter-spacing: 0.8px; font-weight: 700; }
+    .t-val { font-size: 14px; font-weight: 800; font-family: monospace; margin-top: 3px; }
+    .meter-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .meter-bar-bg { flex: 1; height: 10px; background: #080a0f; border-radius: 6px; border: 1px solid var(--border); overflow: hidden; }
+    .meter-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--green), var(--amber), var(--red)); transition: width 0.08s linear; }
+
+    /* Action Bar */
     .action-bar { display: flex; gap: 10px; }
     .go-live-btn {
-      flex: 1; padding: 15px; font-size: 15px; font-weight: 900; letter-spacing: 1px; color: #fff;
+      flex: 1; padding: 15px; font-size: 14px; font-weight: 900; letter-spacing: 0.8px; color: #fff;
       background: linear-gradient(180deg, #ff453a, #b71c1c); border: 1px solid #ff6b6b; border-radius: 14px;
       box-shadow: 0 8px 22px rgba(255,59,48,0.4); cursor: pointer;
     }
     .go-live-btn.streaming { background: linear-gradient(180deg, #2b313e, #161920); border-color: var(--red); }
-    .kill-btn {
-      width: 56px; background: #261215; border: 1px solid var(--red-dark); border-radius: 14px;
-      color: var(--red); font-size: 18px; cursor: pointer;
-    }
+    .kill-btn { width: 56px; background: #261215; border: 1px solid var(--red-dark); border-radius: 14px; color: var(--red); font-size: 18px; cursor: pointer; }
 
-    /* Slide-out Drawer (Matching Android Side Menu) */
-    .drawer-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 40; display: none;
-    }
+    /* Drawer */
+    .drawer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 40; display: none; }
     .drawer-backdrop.open { display: block; }
     .drawer {
       position: fixed; top: 0; left: -310px; width: 290px; height: 100%;
@@ -177,9 +195,7 @@
       padding: 18px; transition: left 0.25s ease; display: flex; flex-direction: column; gap: 14px;
     }
     .drawer.open { left: 0; }
-    .drawer-box {
-      background: #171c29; border: 1px solid var(--border); border-radius: 14px; padding: 14px;
-    }
+    .drawer-box { background: #171c29; border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
     .drawer-box h4 { font-size: 13px; color: #fff; margin-bottom: 6px; }
     .drawer-box p { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
@@ -190,13 +206,12 @@
 </head>
 <body>
 
-  <!-- Top Welcome Banner -->
   <div id="welcomeBanner" class="welcome-banner">
-    <span>📢 Welcome to GO LIVE Studio • PureSunni Network</span>
+    <span>📢 Welcome to GO LIVE Studio • PureSunni Network (24/7 Cloud URL Engine Ready)</span>
     <button onclick="document.getElementById('welcomeBanner').style.display='none'">✕</button>
   </div>
 
-  <!-- Side Drawer Menu (About GO LIVE & Broadcaster Profile) -->
+  <!-- Side Drawer -->
   <div id="drawerBackdrop" class="drawer-backdrop" onclick="toggleDrawer(false)"></div>
   <aside id="sideDrawer" class="drawer">
     <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -215,15 +230,8 @@
     </div>
 
     <div class="drawer-box">
-      <h4>GO LIVE Broadcast Studio v1.0.32</h4>
-      <p>Web & Mobile Broadcast Studio with 24/7 loop playback, multi-RTMP ingest publishing, live audio dB meter, auto-reconnect failover, and local backup recording.</p>
-    </div>
-
-    <div class="drawer-box">
-      <h4>Auto-Reconnect Failover</h4>
-      <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-top:6px;cursor:pointer;">
-        <input type="checkbox" id="autoReconnectChk" checked /> Enable Exponential Auto-Reconnect
-      </label>
+      <h4>24/7 Background URL Stream</h4>
+      <p>Direct MP4 / M3U8 / Cloud Video URL runs directly on your Relay Server. Even if you close this tab or browser, the stream keeps running 24/7 until you press Stop.</p>
     </div>
   </aside>
 
@@ -231,7 +239,7 @@
     <!-- Header -->
     <header>
       <div class="header-left">
-        <button class="menu-btn" onclick="toggleDrawer(true)" title="Menu & About">☰</button>
+        <button class="menu-btn" onclick="toggleDrawer(true)">☰</button>
         <div class="live-dot"></div>
         <div>
           <div class="title">GO LIVE</div>
@@ -241,15 +249,54 @@
       <div id="statusBadge" class="badge">OFFLINE</div>
     </header>
 
-    <!-- Camera / Studio Preview -->
+    <!-- #1 TOP PRIORITY FEATURE: 24/7 URL STREAM (RUNS EVEN AFTER CLOSING PAGE) -->
+    <div class="studio-card featured-card">
+      <div class="card-header-row">
+        <span class="card-label">⭐ 24/7 CLOUD URL LIVE STREAM (RUNS EVEN AFTER CLOSING PAGE)</span>
+        <span class="pill-247">BACKGROUND KEEP-ALIVE: ON</span>
+      </div>
+
+      <div class="row-input">
+        <input type="text" id="sourceVideoUrl" placeholder="Paste Direct Video / M3U8 / Google Drive Direct MP4 URL here..." />
+        <button class="ctrl amber-active" style="flex:0 0 auto;" onclick="previewUrlInStudio()">👁 Preview URL</button>
+      </div>
+
+      <div class="row-input">
+        <input type="text" id="rtmpInput" placeholder="rtmp://a.rtmp.youtube.com/live2/YOUR_STREAM_KEY" />
+        <button class="ctrl amber-active" style="flex:0 0 auto;" onclick="addRtmpDestination()">+ Save Key</button>
+      </div>
+      <div id="rtmpList" class="rtmp-list"></div>
+
+      <div class="row-input">
+        <input type="text" id="serverApiUrl" value="http://localhost:8080" placeholder="Cloud Relay Server URL (e.g. https://golive-relay.onrender.com)" />
+        <select id="loopModeSelect" style="flex:0 0 180px;">
+          <option value="infinite">Loop: 24/7 Infinite</option>
+          <option value="once">Play Once</option>
+        </select>
+      </div>
+
+      <div class="cloud-actions">
+        <button class="btn-cloud-start" onclick="startCloud247Stream()">🚀 START 24/7 CLOUD URL LIVE (NO PAGE NEEDED)</button>
+        <button class="btn-cloud-stop" onclick="stopCloud247Stream()">■ STOP CLOUD LIVE</button>
+      </div>
+
+      <div class="cloud-status-box">
+        <span id="cloudStatusText">Cloud Engine: Standby (Close browser freely once started)</span>
+        <button class="ctrl" style="padding:5px 10px;font-size:11px;" onclick="checkCloudStatus()">↻ Sync Status</button>
+      </div>
+    </div>
+
+    <!-- #2 STUDIO PREVIEW & CAMERA / LOCAL SOURCE -->
     <div class="studio-card">
-      <span class="card-label">CAMERA & STUDIO PREVIEW</span>
+      <div class="card-header-row">
+        <span class="card-label" style="color:var(--muted);">LIVE STUDIO MONITOR (CAMERA / SCREEN / LOCAL FILE)</span>
+      </div>
       <div class="canvas-wrap">
         <canvas id="studioCanvas" width="1280" height="720"></canvas>
         <div id="sourcePill" class="source-pill">STANDBY • READY</div>
         <div id="camPlaceholder" class="cam-placeholder">
-          <div class="cam-icon">📹</div>
-          <p>Camera preview requires permission or select Local Video / Screen</p>
+          <div style="font-size:32px;opacity:0.7;">📹</div>
+          <p style="font-size:12px;color:var(--muted);">Preview URL above or enable Camera / Screen / Local Video</p>
           <button class="enable-cam-btn" onclick="startCamera()">Enable Camera</button>
         </div>
       </div>
@@ -258,7 +305,7 @@
         <button id="btnCam" class="ctrl" onclick="startCamera()">📷 Camera</button>
         <button id="btnScreen" class="ctrl" onclick="startScreenShare()">🖥️ Screen / Tab</button>
         <label class="file-btn">
-          🔁 24/7 Local Video
+          🔁 Local Video
           <input type="file" id="videoInput" accept="video/*" onchange="loadLocalVideos(event)" />
         </label>
         <label class="file-btn">
@@ -274,7 +321,7 @@
       </div>
 
       <div class="row-input">
-        <input type="text" id="tickerInput" placeholder="Live Scrolling Ticker (e.g. PureSunni Network Live Mehfil)" oninput="updateTicker()" />
+        <input type="text" id="tickerInput" placeholder="Live Scrolling Ticker Text (e.g. PureSunni Network Live)" oninput="updateTicker()" />
         <select id="resSelect" onchange="updateResolution()">
           <option value="1280x720">720p HD • 30 fps (3000k)</option>
           <option value="1920x1080">1080p Full HD • 30 fps (4500k)</option>
@@ -283,13 +330,13 @@
       </div>
     </div>
 
-    <!-- Stream Health & Telemetry -->
+    <!-- #3 TELEMETRY & AUDIO LEVEL METER -->
     <div class="studio-card">
       <div class="telemetry">
         <div><div class="t-label">DURATION</div><div id="tDuration" class="t-val">00:00:00</div></div>
         <div><div class="t-label">BITRATE</div><div id="tBitrate" class="t-val">3000k</div></div>
         <div><div class="t-label">OUTPUT</div><div id="tOutput" class="t-val">720p 30fps</div></div>
-        <div><div class="t-label">NETWORK / HEALTH</div><div id="tNet" class="t-val" style="color:var(--green)">ONLINE • 100%</div></div>
+        <div><div class="t-label">NETWORK</div><div id="tNet" class="t-val" style="color:var(--green)">ONLINE • 100%</div></div>
       </div>
       <div class="meter-row">
         <span style="font-size:11px;font-weight:800;color:var(--muted)">AUDIO</span>
@@ -298,33 +345,18 @@
       </div>
     </div>
 
-    <!-- Multi-RTMP / RTMPS Destinations -->
-    <div class="studio-card">
-      <span class="card-label">SIMULTANEOUS RTMP / RTMPS DESTINATIONS (YOUTUBE / FACEBOOK)</span>
-      <div class="row-input">
-        <input type="text" id="rtmpInput" placeholder="rtmp://a.rtmp.youtube.com/live2/YOUR_STREAM_KEY" />
-        <button class="ctrl amber-active" style="flex:0 0 auto;padding:10px 16px;" onclick="addRtmpDestination()">+ Add Stream Key</button>
-      </div>
-      <div id="rtmpList" class="rtmp-list"></div>
-
-      <div class="row-input" style="margin-top:10px;">
-        <input type="text" id="relayUrl" value="ws://localhost:8080" placeholder="WebSocket RTMP Relay URL (wss://your-relay.onrender.com)" />
-      </div>
-    </div>
-
-    <!-- Action Bar -->
+    <!-- #4 BROWSER CAMERA/SCREEN LIVE BUTTON -->
     <div class="action-bar">
-      <button id="btnGoLive" class="go-live-btn" onclick="toggleStream()">▶ START LIVE STREAM</button>
-      <button class="kill-btn" title="Emergency Stop" onclick="emergencyStop()">⏻</button>
+      <button id="btnGoLive" class="go-live-btn" onclick="toggleBrowserStream()">▶ START CAMERA / SCREEN LIVE</button>
+      <button class="kill-btn" title="Emergency Stop All" onclick="emergencyStop()">⏻</button>
     </div>
 
-    <!-- Footer (Matching Android App) -->
     <footer>
       Creator by Zafar Khan • <a href="https://www.youtube.com/@PureSunniNetwork" target="_blank">Pure Sunni Network</a>
     </footer>
   </div>
 
-  <video id="hiddenVideo" playsinline muted loop style="display:none"></video>
+  <video id="hiddenVideo" crossorigin="anonymous" playsinline muted loop style="display:none"></video>
 
   <script>
     const canvas = document.getElementById('studioCanvas');
@@ -337,9 +369,8 @@
     let micEnabled = true;
     let tickerText = "";
     let tickerX = canvas.width;
-    let isLive = false;
-    let manualStop = false;
-    let reconnectAttempts = 0;
+    let isBrowserLive = false;
+    let isCloudLive = false;
     let currentBitrate = 3000000;
 
     let mediaRecorder = null;
@@ -348,11 +379,12 @@
     let ws = null;
     let timerInterval = null;
     let secondsElapsed = 0;
-
     let audioCtx, analyser, micSource, destNode;
 
-    // Saved RTMP Destinations
+    // Load saved URLs & RTMP keys from localStorage
     let rtmpTargets = JSON.parse(localStorage.getItem('golive_rtmp_targets') || '[]');
+    document.getElementById('sourceVideoUrl').value = localStorage.getItem('golive_last_url') || '';
+    document.getElementById('serverApiUrl').value = localStorage.getItem('golive_server_url') || 'http://localhost:8080';
     renderRtmpList();
 
     function toggleDrawer(open) {
@@ -363,8 +395,10 @@
     function addRtmpDestination() {
       const val = document.getElementById('rtmpInput').value.trim();
       if (!val) return;
-      rtmpTargets.push(val);
-      localStorage.setItem('golive_rtmp_targets', JSON.stringify(rtmpTargets));
+      if (!rtmpTargets.includes(val)) {
+        rtmpTargets.push(val);
+        localStorage.setItem('golive_rtmp_targets', JSON.stringify(rtmpTargets));
+      }
       document.getElementById('rtmpInput').value = '';
       renderRtmpList();
     }
@@ -378,7 +412,7 @@
     function renderRtmpList() {
       const list = document.getElementById('rtmpList');
       if (rtmpTargets.length === 0) {
-        list.innerHTML = `<div style="font-size:11px;color:var(--muted);padding:4px 2px;">No saved stream keys yet. Add one above or paste directly before going live.</div>`;
+        list.innerHTML = `<div style="font-size:11px;color:var(--muted);padding:3px 2px;">Tip: Save YouTube & Facebook RTMP URLs here for 1-click multi-streaming.</div>`;
         return;
       }
       list.innerHTML = rtmpTargets.map((url, i) => `
@@ -389,6 +423,111 @@
       `).join('');
     }
 
+    function getAllTargets() {
+      const typed = document.getElementById('rtmpInput').value.trim();
+      const list = [...rtmpTargets];
+      if (typed && !list.includes(typed)) list.push(typed);
+      return list;
+    }
+
+    // Preview URL in Studio Canvas
+    function previewUrlInStudio() {
+      const url = document.getElementById('sourceVideoUrl').value.trim();
+      if (!url) { alert("Pehle upar Video / M3U8 URL paste karein."); return; }
+      localStorage.setItem('golive_last_url', url);
+      if (activeStream) activeStream.getTracks().forEach(t => t.stop());
+      hiddenVideo.srcObject = null;
+      hiddenVideo.src = url;
+      hiddenVideo.muted = false;
+      hiddenVideo.play().then(() => {
+        document.getElementById('camPlaceholder').classList.add('hidden');
+        document.getElementById('sourcePill').textContent = "URL PREVIEW • 24/7 FEED";
+      }).catch(() => {
+        document.getElementById('sourcePill').textContent = "URL LOADED (READY FOR CLOUD)";
+      });
+    }
+
+    // START 24/7 CLOUD STREAM (Persists even after closing browser/tab!)
+    async function startCloud247Stream() {
+      const videoUrl = document.getElementById('sourceVideoUrl').value.trim();
+      const serverUrl = document.getElementById('serverApiUrl').value.trim().replace(/\/$/, '');
+      const loopMode = document.getElementById('loopModeSelect').value;
+      const targets = getAllTargets();
+
+      if (!videoUrl) { alert("Please paste your Video / M3U8 / MP4 URL first."); return; }
+      if (targets.length === 0) { alert("Please enter or save at least one RTMP URL + Stream Key."); return; }
+
+      localStorage.setItem('golive_last_url', videoUrl);
+      localStorage.setItem('golive_server_url', serverUrl);
+
+      document.getElementById('cloudStatusText').textContent = "Cloud Engine: Starting 24/7 persistent stream...";
+      try {
+        const res = await fetch(`${serverUrl}/api/start-url-stream`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ videoUrl, rtmpTargets: targets, loop: loopMode === 'infinite' })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          isCloudLive = true;
+          updateMainBadge();
+          document.getElementById('cloudStatusText').innerHTML =
+            `<strong style="color:#34d399;">● LIVE ON CLOUD (24/7):</strong> Safe to close this page/tab! Stream will NOT stop.`;
+          startTimer();
+        } else {
+          alert("Server Error: " + (data.error || "Failed to start"));
+        }
+      } catch (err) {
+        alert("Cloud Relay Server se connect nahi ho paya (" + serverUrl + "). Pehle server.js chalu/deploy karein.");
+        document.getElementById('cloudStatusText').textContent = "Cloud Engine: Server unreachable";
+      }
+    }
+
+    async function stopCloud247Stream() {
+      const serverUrl = document.getElementById('serverApiUrl').value.trim().replace(/\/$/, '');
+      try {
+        await fetch(`${serverUrl}/api/stop-url-stream`, { method: 'POST' });
+      } catch (e) { console.warn(e); }
+      isCloudLive = false;
+      updateMainBadge();
+      document.getElementById('cloudStatusText').textContent = "Cloud Engine: Stopped";
+      if (!isBrowserLive) stopTimer();
+    }
+
+    async function checkCloudStatus() {
+      const serverUrl = document.getElementById('serverApiUrl').value.trim().replace(/\/$/, '');
+      try {
+        const res = await fetch(`${serverUrl}/api/status`);
+        const data = await res.json();
+        isCloudLive = !!data.running;
+        updateMainBadge();
+        if (data.running) {
+          document.getElementById('cloudStatusText').innerHTML =
+            `<strong style="color:#34d399;">● ACTIVE ON CLOUD:</strong> Running in background (${data.uptime || '24/7'})`;
+          if (!timerInterval) startTimer();
+        } else {
+          document.getElementById('cloudStatusText').textContent = "Cloud Engine: Idle / Offline";
+        }
+      } catch (e) {
+        document.getElementById('cloudStatusText').textContent = "Cloud Engine: Offline / Not Connected";
+      }
+    }
+
+    function updateMainBadge() {
+      const badge = document.getElementById('statusBadge');
+      badge.classList.remove('live', 'cloud');
+      if (isCloudLive) {
+        badge.textContent = '● CLOUD 24/7 LIVE';
+        badge.classList.add('cloud');
+      } else if (isBrowserLive) {
+        badge.textContent = '● STUDIO LIVE';
+        badge.classList.add('live');
+      } else {
+        badge.textContent = 'OFFLINE';
+      }
+    }
+
+    // Audio Meter & Studio Functions
     async function initAudio(stream) {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -420,15 +559,10 @@
       document.getElementById('audioBar').style.width = pct + '%';
 
       const labelEl = document.getElementById('audioDbText');
-      if (!micEnabled) {
-        labelEl.textContent = "MUTED"; labelEl.style.color = "var(--red)";
-      } else if (db >= -2) {
-        labelEl.textContent = `${db}dB • CLIPPED`; labelEl.style.color = "var(--red)";
-      } else if (db <= -50) {
-        labelEl.textContent = `${db}dB • SILENT`; labelEl.style.color = "var(--muted)";
-      } else {
-        labelEl.textContent = `${db}dB • NORMAL`; labelEl.style.color = "var(--green)";
-      }
+      if (!micEnabled) { labelEl.textContent = "MUTED"; labelEl.style.color = "var(--red)"; }
+      else if (db >= -2) { labelEl.textContent = `${db}dB • CLIPPED`; labelEl.style.color = "var(--red)"; }
+      else if (db <= -50) { labelEl.textContent = `${db}dB • SILENT`; labelEl.style.color = "var(--muted)"; }
+      else { labelEl.textContent = `${db}dB • NORMAL`; labelEl.style.color = "var(--green)"; }
       requestAnimationFrame(updateAudioMeter);
     }
 
@@ -442,9 +576,7 @@
         document.getElementById('sourcePill').textContent = "CAMERA • LIVE";
         setActiveBtn('btnCam');
         await initAudio(activeStream);
-      } catch (e) {
-        alert("Camera/Mic permission required: " + e.message);
-      }
+      } catch (e) { alert("Camera/Mic permission required: " + e.message); }
     }
 
     async function startScreenShare() {
@@ -454,7 +586,7 @@
         hiddenVideo.srcObject = activeStream;
         await hiddenVideo.play();
         document.getElementById('camPlaceholder').classList.add('hidden');
-        document.getElementById('sourcePill').textContent = "SCREEN / TAB CAPTURE";
+        document.getElementById('sourcePill').textContent = "SCREEN CAPTURE";
         setActiveBtn('btnScreen');
         await initAudio(activeStream);
       } catch (e) { console.warn(e); }
@@ -469,7 +601,7 @@
       hiddenVideo.muted = false;
       hiddenVideo.play();
       document.getElementById('camPlaceholder').classList.add('hidden');
-      document.getElementById('sourcePill').textContent = "24/7 LOOP • " + file.name;
+      document.getElementById('sourcePill').textContent = "LOCAL LOOP • " + file.name;
       setActiveBtn('');
     }
 
@@ -477,10 +609,7 @@
       const file = e.target.files[0];
       if (!file) return;
       const img = new Image();
-      img.onload = () => {
-        posterImg = img;
-        document.getElementById('camPlaceholder').classList.add('hidden');
-      };
+      img.onload = () => { posterImg = img; document.getElementById('camPlaceholder').classList.add('hidden'); };
       img.src = URL.createObjectURL(file);
     }
 
@@ -499,7 +628,6 @@
       btn.classList.toggle('amber-active', micEnabled);
     }
 
-    // Local Backup Recording (Saves .webm directly to device)
     function toggleLocalRecord() {
       const btn = document.getElementById('btnLocalRec');
       if (localRecorder && localRecorder.state === 'recording') {
@@ -525,11 +653,7 @@
       btn.classList.add('green-active');
     }
 
-    function updateTicker() {
-      tickerText = document.getElementById('tickerInput').value.trim();
-      tickerX = canvas.width;
-    }
-
+    function updateTicker() { tickerText = document.getElementById('tickerInput').value.trim(); tickerX = canvas.width; }
     function updateResolution() {
       const [w, h] = document.getElementById('resSelect').value.split('x').map(Number);
       canvas.width = w; canvas.height = h;
@@ -537,24 +661,18 @@
       document.getElementById('tBitrate').textContent = (currentBitrate / 1000) + 'k';
       document.getElementById('tOutput').textContent = `${h}p 30fps`;
     }
-
     function setActiveBtn(id) {
       ['btnCam', 'btnScreen'].forEach(b => document.getElementById(b).classList.remove('active'));
       if (id) document.getElementById(id).classList.add('active');
     }
 
-    // 30 FPS Compositor Render Loop
     function renderLoop() {
       ctx.fillStyle = '#05070a';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      if (!audioOnlyMode && hiddenVideo.readyState >= 2) {
-        ctx.drawImage(hiddenVideo, 0, 0, canvas.width, canvas.height);
-      }
+      if (!audioOnlyMode && hiddenVideo.readyState >= 2) ctx.drawImage(hiddenVideo, 0, 0, canvas.width, canvas.height);
       if (posterImg) {
-        if (audioOnlyMode) {
-          ctx.drawImage(posterImg, 0, 0, canvas.width, canvas.height);
-        } else {
+        if (audioOnlyMode) ctx.drawImage(posterImg, 0, 0, canvas.width, canvas.height);
+        else {
           const w = canvas.width * 0.15;
           const h = (posterImg.height / posterImg.width) * w;
           ctx.drawImage(posterImg, canvas.width - w - 24, 24, w, h);
@@ -573,112 +691,66 @@
     }
     renderLoop();
 
-    function toggleStream() {
-      if (isLive) { manualStop = true; stopStream(); return; }
-      const inputVal = document.getElementById('rtmpInput').value.trim();
-      const targets = [...rtmpTargets];
-      if (inputVal && !targets.includes(inputVal)) targets.push(inputVal);
-
-      if (targets.length === 0) {
-        alert("Please enter or add at least one YouTube / Facebook RTMP URL + Stream Key");
+    function toggleBrowserStream() {
+      if (isBrowserLive) {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+        if (ws) ws.close();
+        isBrowserLive = false;
+        document.getElementById('btnGoLive').textContent = '▶ START CAMERA / SCREEN LIVE';
+        document.getElementById('btnGoLive').classList.remove('streaming');
+        updateMainBadge();
+        if (!isCloudLive) stopTimer();
         return;
       }
-      manualStop = false;
-      reconnectAttempts = 0;
-      connectRelay(targets);
-    }
-
-    function connectRelay(targets) {
-      const relay = document.getElementById('relayUrl').value.trim();
+      const targets = getAllTargets();
+      if (targets.length === 0) { alert("Please add an RTMP URL + Stream Key first."); return; }
+      const serverUrl = document.getElementById('serverApiUrl').value.trim().replace(/\/$/, '');
+      const wsUrl = serverUrl.replace(/^http/, 'ws');
       const query = targets.map(t => `rtmp=${encodeURIComponent(t)}`).join('&');
-      try {
-        ws = new WebSocket(`${relay}?${query}`);
-        ws.onopen = () => {
-          reconnectAttempts = 0;
-          const canvasStream = canvas.captureStream(30);
-          if (destNode) destNode.stream.getAudioTracks().forEach(t => canvasStream.addTrack(t));
-          mediaRecorder = new MediaRecorder(canvasStream, {
-            mimeType: 'video/webm;codecs=vp8,opus',
-            videoBitsPerSecond: currentBitrate
-          });
-          mediaRecorder.ondataavailable = (e) => {
-            if (e.data.size > 0 && ws && ws.readyState === 1) ws.send(e.data);
-          };
-          mediaRecorder.start(250);
-          setLiveUI(true, false);
-        };
-        ws.onclose = () => {
-          if (!manualStop && document.getElementById('autoReconnectChk').checked && reconnectAttempts < 5) {
-            reconnectAttempts++;
-            const delay = Math.min(15000, 1000 * Math.pow(2, reconnectAttempts - 1));
-            setLiveUI(false, true, reconnectAttempts);
-            setTimeout(() => { if (!manualStop) connectRelay(targets); }, delay);
-          } else {
-            stopStream();
-          }
-        };
-        ws.onerror = () => {
-          if (reconnectAttempts === 0) {
-            alert("Relay server connect nahi hua. Pehle apna WebSocket-to-FFmpeg RTMP relay server start/deploy karein.");
-          }
-        };
-      } catch (err) { alert(err.message); }
-    }
-
-    function stopStream() {
-      if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-      if (ws) { ws.onclose = null; ws.close(); }
-      setLiveUI(false, false);
+      ws = new WebSocket(`${wsUrl}?${query}`);
+      ws.onopen = () => {
+        const canvasStream = canvas.captureStream(30);
+        if (destNode) destNode.stream.getAudioTracks().forEach(t => canvasStream.addTrack(t));
+        mediaRecorder = new MediaRecorder(canvasStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: currentBitrate });
+        mediaRecorder.ondataavailable = e => { if (e.data.size > 0 && ws.readyState === 1) ws.send(e.data); };
+        mediaRecorder.start(250);
+        isBrowserLive = true;
+        document.getElementById('btnGoLive').textContent = '■ STOP CAMERA / SCREEN LIVE';
+        document.getElementById('btnGoLive').classList.add('streaming');
+        updateMainBadge();
+        startTimer();
+      };
+      ws.onerror = () => alert("Relay server connect nahi hua.");
     }
 
     function emergencyStop() {
-      manualStop = true;
-      stopStream();
+      stopCloud247Stream();
+      if (isBrowserLive) toggleBrowserStream();
       if (localRecorder && localRecorder.state === 'recording') toggleLocalRecord();
       if (activeStream) activeStream.getTracks().forEach(t => t.stop());
       hiddenVideo.pause();
-      document.getElementById('camPlaceholder').classList.remove('hidden');
     }
 
-    function setLiveUI(live, reconnecting, attempt = 0) {
-      isLive = live;
-      const badge = document.getElementById('statusBadge');
-      const btn = document.getElementById('btnGoLive');
-      badge.classList.remove('live', 'reconnecting');
-
-      if (reconnecting) {
-        badge.textContent = `RECONNECTING (${attempt})...`;
-        badge.classList.add('reconnecting');
-        return;
-      }
-      badge.textContent = live ? '● LIVE' : 'OFFLINE';
-      if (live) badge.classList.add('live');
-      btn.textContent = live ? '■ STOP LIVE STREAM' : '▶ START LIVE STREAM';
-      btn.classList.toggle('streaming', live);
-
-      if (live && !timerInterval) {
-        secondsElapsed = 0;
-        timerInterval = setInterval(() => {
-          secondsElapsed++;
-          const h = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
-          const m = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
-          const s = String(secondsElapsed % 60).padStart(2, '0');
-          document.getElementById('tDuration').textContent = `${h}:${m}:${s}`;
-        }, 1000);
-      } else if (!live && !reconnecting) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-      }
+    function startTimer() {
+      if (timerInterval) return;
+      secondsElapsed = 0;
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const h = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
+        const m = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
+        const s = String(secondsElapsed % 60).padStart(2, '0');
+        document.getElementById('tDuration').textContent = `${h}:${m}:${s}`;
+      }, 1000);
     }
 
-    window.addEventListener('online', () => {
-      const el = document.getElementById('tNet');
-      el.textContent = 'ONLINE • 100%'; el.style.color = 'var(--green)';
-    });
-    window.addEventListener('offline', () => {
-      const el = document.getElementById('tNet');
-      el.textContent = 'OFFLINE • 0%'; el.style.color = 'var(--red)';
-    });
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      document.getElementById('tDuration').textContent = '00:00:00';
+    }
+
+    // Auto-check on page load if 24/7 Cloud stream is already running!
+    window.addEventListener('load', checkCloudStatus);
   </script>
 </body>
 </html>
